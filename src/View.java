@@ -32,6 +32,49 @@ public class View {
         System.out.println("4. Tormentoso");
         return defensivoInt(1, 4);
     }
+    public Nodo AddNode(HashMap<Integer,String> ciudades){
+        Nodo tem = new Nodo();
+        int[] temArr = new int[4];
+        System.out.println("Ingrese la ciudad de origen: ");
+        for(int i = 1;i<ciudades.values().size()+1;i++){
+            System.out.println((i)+". "+ciudades.get(i));
+        }
+        tem.setId(defensivoInt(1,ciudades.values().size()));
+
+        System.out.println("Ingrese la ciudad de destino: ");
+        for(int i = 1;i<ciudades.values().size()+1;i++){
+            System.out.println((i)+". "+ciudades.get(i));
+        }
+        tem.setConexion(defensivoInt(1,ciudades.values().size()));
+
+        System.out.println("Ingrese el valor para Tiempo Normal: ");
+        temArr[0] = defensivoInt(1,100);
+        System.out.println("Ingrese el valor para Tiempo Lluvioso: ");
+        temArr[1] = defensivoInt(1,100);
+        System.out.println("Ingrese el valor para Tiempo Nevado: ");
+        temArr[2] = defensivoInt(1,100);
+        System.out.println("Ingrese el valor para Tiempo Tormentoso: ");
+        temArr[3] = defensivoInt(1,100);
+        tem.setTiempos(temArr);
+        return tem;
+    }
+    public int ElimRut(ArrayList<Nodo> grafo, HashMap<Integer,String> ciudades){
+        System.out.println("Elija cual de los viajes desea eliminar: ");
+        System.out.println("Origen - destino - T. Normal - T. Lluvia - T. Nieve - T. Tormenta");
+        int id = 1;
+        for(Nodo nod:grafo){
+            System.out.println(id+". "+ciudades.get(nod.getId())+" - "+ciudades.get(nod.getConexion())+" - "+
+                    nod.getTiempos()[0]+" - "+nod.getTiempos()[1]+" - "+nod.getTiempos()[2]+" - "+nod.getTiempos()[3]);
+            id++;
+        }
+        return defensivoInt(1,id);
+    }
+
+    public void centrGrafo(int nodo, int excen, HashMap<Integer,String> ciudades){
+        System.out.println("El centro del grafo es la ciudad: "+ciudades.get(nodo));
+        System.out.println("La excentricidad de esta ciudad es: "+excen);
+        System.out.println("");
+    }
 
     public void RetRut(ArrayList<Integer> ruta, HashMap<Integer,String> ciudades){
         String[] tem = new String[0];

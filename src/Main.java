@@ -13,16 +13,19 @@ public class Main {
             switch (op) {
                 case 1:
                     ArrayList<Integer> datos = view.AskRut(gr.decifrar);
-                    ArrayList<Integer> ruta = floyd.RutaMasCorta(gr.grafo, gr.decifrar, datos.get(2)-1, datos.get(0), datos.get(1));
+                    ArrayList<Integer> ruta = floyd.RutaMasCorta(gr.grafo, gr.decifrar.length, datos.get(2)-1, datos.get(0), datos.get(1));
                     view.RetRut(ruta,gr.ciudades);
                     break;
                 case 2:
-                    int[] excen = floyd.centroGrafo(gr.grafo,gr.decifrar,view.tiempo()-1);
-
+                    int[] excen = floyd.centroGrafo(gr.grafo,gr.decifrar.length,view.tiempo()-1);
+                    view.centrGrafo(excen[2],excen[0],gr.ciudades);
                     break;
                 case 3:
+                    gr.grafo.add(view.AddNode(gr.ciudades));
                     break;
                 case 4:
+                    int index = view.ElimRut(gr.grafo,gr.ciudades);
+                    gr.grafo.remove(index-1);
                     break;
                 default:
                     boo = false;

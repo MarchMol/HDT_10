@@ -6,9 +6,9 @@ public class AlgoritmoFloyd {
     public int[][] Mnodos;
     public ArrayList<Integer> Recorrido;
 
-    public int[] centroGrafo(ArrayList<Nodo> arr, String[] decifrar, int tiempo){
-        genMatrices(arr, decifrar, tiempo);
-        int size = decifrar.length;
+    public int[] centroGrafo(ArrayList<Nodo> arr, int size, int tiempo){
+        FloydWarshall(arr, size, tiempo);
+        printMatrices(size);
         int excen[] = new int[3];
         int MinExcen = 0;
         int nod = 0;
@@ -21,16 +21,23 @@ public class AlgoritmoFloyd {
             }
             if(excen[1]<excen[0]){
                 excen[0]=excen[1];
-                excen[3]=j+1;
+                excen[2]=j+1;
             }
         }
         return excen;
     }
-    public ArrayList<Integer> RutaMasCorta(ArrayList<Nodo> arr, String[] decifrar, int tiempo, int inicio, int destino) {
+    public ArrayList<Integer> RutaMasCorta(ArrayList<Nodo> arr, int size, int tiempo, int inicio, int destino) {
         Recorrido  = new ArrayList<Integer>();
         int tem;
-        int size = decifrar.length;
-        genMatrices(arr, decifrar, tiempo);
+        FloydWarshall(arr, size, tiempo);
+        printMatrices(size);
+        rec(inicio-1,destino-1);
+        Recorrido.add(destino);
+        Recorrido.add(Mpesos[inicio-1][destino-1]);
+        return Recorrido;
+    }
+    public void FloydWarshall(ArrayList<Nodo> arr, int size, int tiempo){
+        genMatrices(arr, size, tiempo);
         for (int nod = 0; nod < size; nod++) {
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
@@ -43,11 +50,6 @@ public class AlgoritmoFloyd {
                 }
             }
         }
-        printMatrices(size);
-        rec(inicio-1,destino-1);
-        Recorrido.add(destino);
-        Recorrido.add(Mpesos[inicio-1][destino-1]);
-        return Recorrido;
     }
 
     public void rec(int inicio, int destino){
@@ -79,8 +81,7 @@ public class AlgoritmoFloyd {
         System.out.println("-----------");
     }
 
-    public void genMatrices(ArrayList<Nodo> arr, String[] decifrar, int tiempo) {
-        int size = decifrar.length;
+    public void genMatrices(ArrayList<Nodo> arr, int size, int tiempo) {
         Mpesos = new int[size][size];
         Mnodos = new int[size][size];
         for (Nodo nod : arr) {
